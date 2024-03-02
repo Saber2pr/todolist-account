@@ -1,27 +1,40 @@
 import 'normalize.css'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { Button } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
+import { Route, Routes, HashRouter } from 'react-router-dom'
 
-import { Title } from './app.style'
-import { View } from '@/components'
+import { Header } from './components/header'
+import { RegisterPage } from './pages/Register'
+import {
+  AsideContent,
+  Container,
+  Content,
+  MainContent,
+  GlobalStyle,
+} from './app.style'
+import { LoginPage } from './pages/Login'
+import { ResetPage } from './pages/Reset'
 
 export const App = () => {
-  useEffect(() => {
-    const a: IConfig = { test: '' }
-    console.log('test')
-  }, [])
   return (
-    <>
-      <Title />
-      <main>
-        <View />
-        <Button icon={<DownloadOutlined />}>test</Button>
-      </main>
-      <footer>footer</footer>
-    </>
+    <HashRouter>
+      <Container>
+        {/* @ts-ignore */}
+        <GlobalStyle />
+        <Header />
+        <Content>
+          <MainContent>
+            <Routes>
+              <Route path="/" element={<RegisterPage />}></Route>
+              <Route path="/login" element={<LoginPage />}></Route>
+              <Route path="/reset" element={<ResetPage />}></Route>
+            </Routes>
+          </MainContent>
+          <AsideContent></AsideContent>
+        </Content>
+      </Container>
+    </HashRouter>
   )
 }
 
