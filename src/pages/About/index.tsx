@@ -24,6 +24,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({}) => {
         It was first released on On 2021/6/14, the optimization function will be
         updated in the long term.
       </Typography.Paragraph>
+      <Divider />
+      <a href="https://saber2pr.top/todolist-pro/posts/1949634023/1186381381/">
+        Future planning
+      </a>
     </Contain>
   )
 }
