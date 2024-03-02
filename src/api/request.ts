@@ -19,7 +19,7 @@ const request = axios.create({
 request.interceptors.request.use((config) => {
   const token = getToken()
   if (token) {
-    config.headers.setAuthorization(`Bearer ${getToken()}`)
+    config.headers.setAuthorization(`Bearer ${token}`)
   }
   return config
 })
