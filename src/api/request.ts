@@ -16,9 +16,26 @@ const request = axios.create({
   baseURL: 'https://strapi.saber2pr.top',
 })
 
+export const ApiUrls = {
+  me: `/api/users/me`,
+  register: `/api/auth/local/register`,
+  login: `/api/auth/local`,
+  forgot: `/api/auth/forgot-password`,
+  reset: `/api/auth/reset-password`,
+}
+
+const WhiteUrls = [
+  ApiUrls.login,
+  ApiUrls.register,
+  ApiUrls.forgot,
+  ApiUrls.reset,
+]
+
 request.interceptors.request.use((config) => {
+  const isWhite = WhiteUrls.includes(config.url)
+
   const token = getToken()
-  if (token) {
+  if (token && !isWhite) {
     config.headers.setAuthorization(`Bearer ${token}`)
   }
   return config
