@@ -79,11 +79,13 @@ export const ResetPage: React.FC<ResetPageProps> = ({}) => {
       >
         {content}
       </Card>
-      <Bottom>
-        <Link to="/login" style={{ textDecoration: 'underline' }}>
-          Back to Sign In
-        </Link>
-      </Bottom>
+      {showTip || (
+        <Bottom>
+          <Link to="/login" style={{ textDecoration: 'underline' }}>
+            Back to Sign In
+          </Link>
+        </Bottom>
+      )}
     </Contain>
   )
 }
