@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
   return (
     <Contain>
       <LeftContent>
-        <div>Todolist TreeView</div>
+        <div>Todolist TreeView Account</div>
       </LeftContent>
       <RightContent>
         {userInfo ? (

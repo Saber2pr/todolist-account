@@ -31,4 +31,28 @@ export const GlobalStyle = createGlobalStyle`
       width: 100%;
     }
   }
+
+  .aside-link {
+    user-select: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    color: #6d6d6d;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: block;
+    &:nth-child(n + 2) {
+      margin-top: 4px;
+    }
+
+    &:hover {
+      outline: -webkit-focus-ring-color auto 1px;
+      color: #1a1a1a;
+    }
+
+    &-active {
+      color: #1a1a1a;
+    }
+  }
+
 `

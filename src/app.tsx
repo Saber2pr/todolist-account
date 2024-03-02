@@ -19,6 +19,8 @@ import { LoginPage } from './pages/Login'
 import { RegisterPage } from './pages/Register'
 import { ResetPage } from './pages/Reset'
 import { store } from './store/store'
+import { AsideMenu } from './components/aside-menu'
+import { AboutPage } from './pages/About'
 
 export const App = () => {
   return (
@@ -34,9 +36,12 @@ export const App = () => {
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/reset" element={<ResetPage />}></Route>
             <Route path="/confirmReset" element={<ConfirmResetPage />}></Route>
+            <Route path="/about" element={<AboutPage />}></Route>
           </Routes>
         </MainContent>
-        <AsideContent></AsideContent>
+        <AsideContent>
+          <AsideMenu />
+        </AsideContent>
       </Content>
     </Container>
   )

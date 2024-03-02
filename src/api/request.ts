@@ -30,7 +30,6 @@ request.interceptors.response.use(
   },
   (error: AxiosError<any>) => {
     if (error?.response?.status === 401) {
-      message.error('You have been logged out due to inactivity')
       clearToken()
       location.hash = '/login'
     } else {
