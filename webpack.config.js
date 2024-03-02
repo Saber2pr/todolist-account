@@ -31,7 +31,7 @@ module.exports = {
     // 本地调试跨域代理
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:3000', // 这里写你后端的api地址
+        target: 'https://strapi.saber2pr.top', // 这里写你后端的api地址
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/api',

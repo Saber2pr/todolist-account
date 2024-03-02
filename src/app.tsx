@@ -15,6 +15,7 @@ import {
 } from './app.style'
 import { LoginPage } from './pages/Login'
 import { ResetPage } from './pages/Reset'
+import { AccountPage } from './pages/Account'
 
 export const App = () => {
   return (
@@ -26,7 +27,8 @@ export const App = () => {
         <Content>
           <MainContent>
             <Routes>
-              <Route path="/" element={<RegisterPage />}></Route>
+              <Route path="/" element={<AccountPage />}></Route>
+              <Route path="/register" element={<RegisterPage />}></Route>
               <Route path="/login" element={<LoginPage />}></Route>
               <Route path="/reset" element={<ResetPage />}></Route>
             </Routes>
