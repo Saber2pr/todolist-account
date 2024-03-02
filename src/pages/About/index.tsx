@@ -25,6 +25,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({}) => {
         updated in the long term.
       </Typography.Paragraph>
       <Divider />
+      <Typography.Paragraph>
+        Developer's words: The UI and functional design of this software come
+        from my daily working habits, which is equivalent to the program
+        implementation of my working mode.
+      </Typography.Paragraph>
+      <Divider />
       <a href="https://saber2pr.top/todolist-pro/posts/1949634023/1186381381/">
         Future planning
       </a>
