@@ -2,7 +2,7 @@ import { message } from 'antd'
 import axios, { AxiosError } from 'axios'
 
 const tokenKey = 'token'
-const codeKey = 'token'
+const codeKey = 'code'
 
 export const setToken = (token: string) => localStorage.setItem(tokenKey, token)
 export const clearToken = () => localStorage.removeItem(tokenKey)
