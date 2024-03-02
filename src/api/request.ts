@@ -3,12 +3,16 @@ import axios, { AxiosError } from 'axios'
 
 const tokenKey = 'token'
 
+export const setToken = (token: string) => localStorage.setItem(tokenKey, token)
+export const clearToken = () => localStorage.removeItem(tokenKey)
+export const getToken = () => localStorage.getItem(tokenKey)
+
 const request = axios.create({
   baseURL: 'https://strapi.saber2pr.top',
 })
 
 request.interceptors.request.use((config) => {
-  config.headers.setAuthorization(localStorage.getItem(tokenKey))
+  config.headers.setAuthorization(getToken())
   return config
 })
 
@@ -19,7 +23,7 @@ request.interceptors.response.use(
   (error: AxiosError) => {
     if (error?.response?.status === 401) {
       message.error('You have been logged out due to inactivity')
-      localStorage.removeItem(tokenKey)
+      clearToken()
       location.hash = '/login'
     }
   },

@@ -55,7 +55,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
         </FormContent>
       </Card>
       <Bottom>
-        <Link to="/" style={{ textDecoration: 'underline' }}>
+        <Link to="/register" style={{ textDecoration: 'underline' }}>
           Create Account
         </Link>
       </Bottom>

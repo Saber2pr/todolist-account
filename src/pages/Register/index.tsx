@@ -1,11 +1,35 @@
+import { Button, Card, Form, Input, Space, Typography } from 'antd'
 import React from 'react'
-import { Bottom, Contain, FormContent, Logo } from './index.style'
-import { Button, Card, Divider, Form, Input, Space, Typography } from 'antd'
 import { Link } from 'react-router-dom'
+
+import { registerUser, setToken } from '@/api'
+import { useAsync } from '@/hooks/useAsync'
+
+import { Bottom, Contain, FormContent, Logo } from './index.style'
 
 export interface RegisterPageProps {}
 
+type FormValues = {
+  username: string
+  password: string
+  email: string
+}
+
 export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
+  const [form] = Form.useForm()
+
+  const { loading, run: runRegister } = useAsync(
+    async (values: FormValues) => {
+      const res = await registerUser(values)
+      setToken(res.jwt)
+      return res
+    },
+    [],
+    {
+      manual: true,
+    },
+  )
+
   return (
     <Contain>
       <Space style={{ width: '100%', justifyContent: 'center' }}>
@@ -23,7 +47,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
         }}
       >
         <FormContent>
-          <Form layout="vertical">
+          <Form form={form} layout="vertical" onFinish={runRegister}>
             <Form.Item
               name="username"
               label="Username"
@@ -46,7 +70,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
               <Input placeholder="your email" />
             </Form.Item>
           </Form>
-          <Button block type="primary">
+          <Button
+            loading={loading}
+            block
+            type="primary"
+            onClick={() => form.submit()}
+          >
             Create An Account
           </Button>
         </FormContent>
