@@ -49,3 +49,17 @@ export interface GerUserInfoResponse {
   createdAt: string
   updatedAt: string
 }
+
+export interface ForgotPwdParams {
+  email: string
+}
+
+export interface ForgotPwdResponse {}
+
+export interface ResetPwdParams {
+  code: string
+  password: string
+  passwordConfirmation: string
+}
+
+export interface ResetPwdResponse {}
