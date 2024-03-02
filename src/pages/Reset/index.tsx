@@ -47,7 +47,7 @@ export const ResetPage: React.FC<ResetPageProps> = ({}) => {
           type="primary"
           onClick={() => form.submit()}
         >
-          Get Password Reset Code
+          Get Password Reset Link
         </Button>
       </FormContent>
     </>
