@@ -15,6 +15,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({}) => {
         </Typography.Title>
       </Space>
       <Divider />
+      <Typography.Paragraph>
+        Todolist is a task list tool based on tree structure management.
+        <br />
+        It can be used in the vscode plug-in. It also provides desktop apps for
+        macos and windows.
+        <br />
+        It was first released on On 2021/6/14, the optimization function will be
+        updated in the long term.
+      </Typography.Paragraph>
     </Contain>
   )
 }

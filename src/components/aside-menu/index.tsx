@@ -24,7 +24,7 @@ export const AsideMenu: React.FC<AsideMenuProps> = ({}) => {
         About
       </NavLink>
       <a href="https://saber2pr.top/todolist-pro/" className="aside-link">
-        Document
+        User Document
       </a>
     </Contain>
   )
