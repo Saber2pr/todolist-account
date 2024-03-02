@@ -14,6 +14,9 @@ type FormValues = {
   passwordConfirmation: string
 }
 
+const timeout = (delay = 1000) =>
+  new Promise((resolve) => setTimeout(resolve, delay))
+
 export const ConfirmResetPage: React.FC<ConfirmResetPageProps> = ({}) => {
   const [form] = Form.useForm()
 
@@ -29,7 +32,8 @@ export const ConfirmResetPage: React.FC<ConfirmResetPageProps> = ({}) => {
         code,
       })
       clearCode()
-      message.success('Update Password success, to login page ...')
+      message.loading('Update Password success, to login page ...')
+      await timeout(2000)
       location.href = `https://saber2pr.top/todolist-account/#/login`
       return res
     },
