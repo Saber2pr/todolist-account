@@ -2,10 +2,31 @@ import React from 'react'
 import { Bottom, Contain, FormContent, Logo } from './index.style'
 import { Button, Card, Divider, Form, Input, Space, Typography } from 'antd'
 import { Link } from 'react-router-dom'
+import { useAsync } from '@/hooks/useAsync'
+import { loginUser, setToken } from '@/api'
 
 export interface LoginPageProps {}
 
+type FormValues = {
+  identifier: string
+  password: string
+}
+
 export const LoginPage: React.FC<LoginPageProps> = ({}) => {
+  const [form] = Form.useForm()
+
+  const { loading, run: runLogin } = useAsync(
+    async (values: FormValues) => {
+      const res = await loginUser(values)
+      setToken(res.jwt)
+      return res
+    },
+    [],
+    {
+      manual: true,
+    },
+  )
+
   return (
     <Contain>
       <Space style={{ width: '100%', justifyContent: 'center' }}>
@@ -23,7 +44,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
         }}
       >
         <FormContent>
-          <Form layout="vertical">
+          <Form form={form} layout="vertical" onFinish={runLogin}>
             <Form.Item
               name="identifier"
               label="Username"
@@ -49,7 +70,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
               <Input.Password placeholder="your account password" />
             </Form.Item>
           </Form>
-          <Button block type="primary">
+          <Button
+            loading={loading}
+            block
+            type="primary"
+            onClick={() => form.submit()}
+          >
             Sign In
           </Button>
         </FormContent>

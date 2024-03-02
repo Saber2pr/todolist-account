@@ -12,7 +12,10 @@ const request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
-  config.headers.setAuthorization(getToken())
+  const token = getToken()
+  if (token) {
+    config.headers.setAuthorization(`Bearer ${getToken()}`)
+  }
   return config
 })
 
