@@ -3,6 +3,7 @@ import React from 'react'
 
 import { useAppSelector } from '@/store/store'
 import { formatUserName } from '@/utils/formatUserName'
+import { UserOutlined } from '@ant-design/icons'
 
 import { Contain, LeftContent, RightContent } from './index.style'
 import { clearToken } from '@/api'
@@ -40,9 +41,13 @@ export const Header: React.FC<HeaderProps> = ({}) => {
         <div>Todolist TreeView</div>
       </LeftContent>
       <RightContent>
-        <Dropdown trigger={['hover']} overlay={menu}>
-          <Avatar size="small">{formatUserName(userInfo?.username)}</Avatar>
-        </Dropdown>
+        {userInfo ? (
+          <Dropdown trigger={['hover']} overlay={menu}>
+            <Avatar size="small">{formatUserName(userInfo?.username)}</Avatar>
+          </Dropdown>
+        ) : (
+          <Avatar size="small" icon={<UserOutlined />} />
+        )}
       </RightContent>
     </Contain>
   )
