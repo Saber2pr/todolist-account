@@ -4,12 +4,18 @@ import { useAsync } from '@/hooks/useAsync'
 import { getUserInfo } from '@/api'
 import { Descriptions, Skeleton } from 'antd'
 import { formatTimeStr } from '@/utils/date'
+import { useDispatch } from 'react-redux'
+import { commonSlice } from '@/store/common'
+import { useAppDispatch } from '@/store/store'
 
 export interface AccountPageProps {}
 
 export const AccountPage: React.FC<AccountPageProps> = ({}) => {
+  const dispatch = useAppDispatch()
+
   const { data, loading } = useAsync(async () => {
     const userInfo = await getUserInfo()
+    dispatch(commonSlice.actions.setUserInfo(userInfo))
     return userInfo
   }, [])
 

@@ -16,27 +16,31 @@ import {
 import { LoginPage } from './pages/Login'
 import { ResetPage } from './pages/Reset'
 import { AccountPage } from './pages/Account'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 
 export const App = () => {
   return (
-    <HashRouter>
-      <Container>
-        {/* @ts-ignore */}
-        <GlobalStyle />
-        <Header />
-        <Content>
-          <MainContent>
-            <Routes>
-              <Route path="/" element={<AccountPage />}></Route>
-              <Route path="/register" element={<RegisterPage />}></Route>
-              <Route path="/login" element={<LoginPage />}></Route>
-              <Route path="/reset" element={<ResetPage />}></Route>
-            </Routes>
-          </MainContent>
-          <AsideContent></AsideContent>
-        </Content>
-      </Container>
-    </HashRouter>
+    <Provider store={store}>
+      <HashRouter>
+        <Container>
+          {/* @ts-ignore */}
+          <GlobalStyle />
+          <Header />
+          <Content>
+            <MainContent>
+              <Routes>
+                <Route path="/" element={<AccountPage />}></Route>
+                <Route path="/register" element={<RegisterPage />}></Route>
+                <Route path="/login" element={<LoginPage />}></Route>
+                <Route path="/reset" element={<ResetPage />}></Route>
+              </Routes>
+            </MainContent>
+            <AsideContent></AsideContent>
+          </Content>
+        </Container>
+      </HashRouter>
+    </Provider>
   )
 }
 

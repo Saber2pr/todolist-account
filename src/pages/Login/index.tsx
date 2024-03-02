@@ -1,9 +1,12 @@
 import React from 'react'
 import { Bottom, Contain, FormContent, Logo } from './index.style'
 import { Button, Card, Divider, Form, Input, Space, Typography } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAsync } from '@/hooks/useAsync'
 import { loginUser, setToken } from '@/api'
+import { useDispatch } from 'react-redux'
+import { commonSlice } from '@/store/common'
+import { useAppDispatch } from '@/store/store'
 
 export interface LoginPageProps {}
 
@@ -14,16 +17,23 @@ type FormValues = {
 
 export const LoginPage: React.FC<LoginPageProps> = ({}) => {
   const [form] = Form.useForm()
+  const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
 
   const { loading, run: runLogin } = useAsync(
     async (values: FormValues) => {
       const res = await loginUser(values)
       setToken(res.jwt)
+      dispatch(commonSlice.actions.setUserInfo(res.user))
       return res
     },
     [],
     {
       manual: true,
+      onSuccess() {
+        navigate('/')
+      },
     },
   )
 
