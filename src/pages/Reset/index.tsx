@@ -1,18 +1,11 @@
-import React from 'react'
-import { Bottom, Contain, FormContent, Logo } from './index.style'
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Input,
-  Space,
-  Typography,
-  message,
-} from 'antd'
+import { Alert, Button, Card, Form, Input, Space, Typography } from 'antd'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAsync } from '@/hooks/useAsync'
+
 import { forgotPwd } from '@/api'
+import { useAsync } from '@/hooks/useAsync'
+
+import { Bottom, Contain, FormContent, Logo } from './index.style'
 
 export interface ResetPageProps {}
 
@@ -23,11 +16,12 @@ type FormValues = {
 export const ResetPage: React.FC<ResetPageProps> = ({}) => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
+  const [showTip, setShowTip] = useState(false)
 
   const { loading, run: runReset } = useAsync(
     async (values: FormValues) => {
       const res = await forgotPwd(values)
-      message.info('An email with a reset code has been sent to you')
+      setShowTip(true)
       return res
     },
     [],
@@ -38,6 +32,38 @@ export const ResetPage: React.FC<ResetPageProps> = ({}) => {
       },
     },
   )
+
+  let content = (
+    <>
+      <FormContent>
+        <Form form={form} onFinish={runReset} layout="vertical">
+          <Form.Item
+            name="email"
+            label="Email address"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="Email address you use to sign up." />
+          </Form.Item>
+        </Form>
+        <Button
+          loading={loading}
+          block
+          type="primary"
+          onClick={() => form.submit()}
+        >
+          Get Password Reset Code
+        </Button>
+      </FormContent>
+    </>
+  )
+
+  if (showTip) {
+    content = (
+      <>
+        <Alert message="An email with a reset link has been sent to you" />
+      </>
+    )
+  }
 
   return (
     <Contain>
@@ -55,25 +81,7 @@ export const ResetPage: React.FC<ResetPageProps> = ({}) => {
           boxShadow: '0 10px 20px rgba(0, 0, 0, .2)',
         }}
       >
-        <FormContent>
-          <Form form={form} onFinish={runReset} layout="vertical">
-            <Form.Item
-              name="email"
-              label="Email address"
-              rules={[{ required: true }]}
-            >
-              <Input placeholder="Email address you use to sign up." />
-            </Form.Item>
-          </Form>
-          <Button
-            loading={loading}
-            block
-            type="primary"
-            onClick={() => form.submit()}
-          >
-            Get Password Reset Code
-          </Button>
-        </FormContent>
+        {content}
       </Card>
       <Bottom>
         <Link to="/login" style={{ textDecoration: 'underline' }}>

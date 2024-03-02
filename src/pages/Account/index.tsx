@@ -1,19 +1,30 @@
-import React from 'react'
-import { Contain } from './index.style'
-import { useAsync } from '@/hooks/useAsync'
-import { getUserInfo } from '@/api'
 import { Descriptions, Skeleton } from 'antd'
-import { formatTimeStr } from '@/utils/date'
-import { useDispatch } from 'react-redux'
+import React from 'react'
+import { useNavigate } from 'react-router'
+
+import { getUserInfo, setCode } from '@/api'
+import { useAsync } from '@/hooks/useAsync'
 import { commonSlice } from '@/store/common'
 import { useAppDispatch } from '@/store/store'
+import { formatTimeStr } from '@/utils/date'
+import { parseUrlParam } from '@/utils/parseUrlParam'
+
+import { Contain } from './index.style'
 
 export interface AccountPageProps {}
 
 export const AccountPage: React.FC<AccountPageProps> = ({}) => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const { data, loading } = useAsync(async () => {
+    const query = parseUrlParam(location.search)
+    if (query?.code) {
+      setCode(query?.code)
+      navigate('/confirmReset')
+      return
+    }
+
     const userInfo = await getUserInfo()
     dispatch(commonSlice.actions.setUserInfo(userInfo))
     return userInfo

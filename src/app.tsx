@@ -1,9 +1,9 @@
 import 'normalize.css'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { HashRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 
 import {
   AsideContent,
@@ -19,19 +19,8 @@ import { LoginPage } from './pages/Login'
 import { RegisterPage } from './pages/Register'
 import { ResetPage } from './pages/Reset'
 import { store } from './store/store'
-import { parseUrlParam } from './utils/parseUrlParam'
-import { setCode } from './api'
 
 export const App = () => {
-  const navigate = useNavigate()
-  useEffect(() => {
-    const query = parseUrlParam(location.search)
-    if (query?.code) {
-      setCode(query?.code)
-      navigate('/confirmReset')
-    }
-  }, [])
-
   return (
     <Container>
       {/* @ts-ignore */}
