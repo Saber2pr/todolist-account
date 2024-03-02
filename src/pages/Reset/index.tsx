@@ -1,6 +1,6 @@
 import { Alert, Button, Card, Form, Input, Space, Typography } from 'antd'
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { forgotPwd } from '@/api'
 import { useAsync } from '@/hooks/useAsync'
@@ -15,7 +15,6 @@ type FormValues = {
 
 export const ResetPage: React.FC<ResetPageProps> = ({}) => {
   const [form] = Form.useForm()
-  const navigate = useNavigate()
   const [showTip, setShowTip] = useState(false)
 
   const { loading, run: runReset } = useAsync(
@@ -27,9 +26,6 @@ export const ResetPage: React.FC<ResetPageProps> = ({}) => {
     [],
     {
       manual: true,
-      onSuccess() {
-        navigate('/confirmReset')
-      },
     },
   )
 
