@@ -21,6 +21,7 @@ import { ResetPage } from './pages/Reset'
 import { store } from './store/store'
 import { AsideMenu } from './components/aside-menu'
 import { AboutPage } from './pages/About'
+import { ProductsPage } from './pages/Products'
 
 export const App = () => {
   return (
@@ -37,6 +38,7 @@ export const App = () => {
             <Route path="/reset" element={<ResetPage />}></Route>
             <Route path="/confirmReset" element={<ConfirmResetPage />}></Route>
             <Route path="/about" element={<AboutPage />}></Route>
+            <Route path="/products" element={<ProductsPage />}></Route>
           </Routes>
         </MainContent>
         <AsideContent>

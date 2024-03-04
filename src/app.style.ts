@@ -26,6 +26,10 @@ export const AsideContent = styled.div`
 `
 
 export const GlobalStyle = createGlobalStyle`
+  body {
+    min-width: 1000px;
+  }
+
   .password-form-item {
     label {
       width: 100%;

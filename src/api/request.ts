@@ -22,6 +22,12 @@ export const ApiUrls = {
   login: `/api/auth/local`,
   forgot: `/api/auth/forgot-password`,
   reset: `/api/auth/reset-password`,
+  vipGetProduct: '/strapi-paypal/getProduct',
+  vipGetProductCheckout: '/strapi-paypal/getPaypalCheckout',
+}
+
+export const VipProducts = {
+  TodolistTreeViewPro: '2',
 }
 
 const WhiteUrls = [

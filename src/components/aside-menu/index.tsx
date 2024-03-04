@@ -19,6 +19,14 @@ export const AsideMenu: React.FC<AsideMenuProps> = ({}) => {
         className={(props) =>
           `aside-link ${props.isActive ? 'aside-link-active' : ''}`
         }
+        to="/products"
+      >
+        Products
+      </NavLink>
+      <NavLink
+        className={(props) =>
+          `aside-link ${props.isActive ? 'aside-link-active' : ''}`
+        }
         to="/about"
       >
         About
