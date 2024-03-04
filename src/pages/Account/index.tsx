@@ -1,11 +1,19 @@
-import { Card, Descriptions, Divider, Skeleton, Space, Typography } from 'antd'
+import {
+  Card,
+  Descriptions,
+  Divider,
+  Skeleton,
+  Space,
+  Tag,
+  Typography,
+} from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { getUserInfo, setCode } from '@/api'
 import { useAsync } from '@/hooks/useAsync'
 import { commonSlice } from '@/store/common'
-import { useAppDispatch } from '@/store/store'
+import { useAppDispatch, useAppSelector } from '@/store/store'
 import { formatTimeStr } from '@/utils/date'
 import { parseUrlParam } from '@/utils/parseUrlParam'
 
@@ -17,6 +25,10 @@ export interface AccountPageProps {}
 export const AccountPage: React.FC<AccountPageProps> = ({}) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const product = useAppSelector((state) => state?.common?.product)
+
+  const isActive = product?.status === 'ACTIVE'
 
   const { data, loading } = useAsync(async () => {
     const query = parseUrlParam(location.search)
@@ -65,6 +77,11 @@ export const AccountPage: React.FC<AccountPageProps> = ({}) => {
           <Descriptions.Item label="First Login">
             {formatTimeStr(data?.createdAt)}
           </Descriptions.Item>
+          {isActive && (
+            <Descriptions.Item label="Product">
+              <Tag.CheckableTag checked>TodolistTreeViewPro</Tag.CheckableTag>
+            </Descriptions.Item>
+          )}
         </Descriptions>
       </Card>
     </Contain>

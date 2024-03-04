@@ -3,6 +3,7 @@ import { Contain, Img } from './index.style'
 import { Card, Col, Divider, Image, Row, Typography } from 'antd'
 import { useFormModal } from '@/hooks/useFormModal'
 import { Product } from './Product'
+import { VipProducts } from '@/api'
 
 export interface ProductsPageProps {}
 
@@ -19,7 +20,16 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({}) => {
           <Product
             img="//saber2pr.top/MyWeb/resource/image/todolist-logo.png"
             title="TodolistTreeView Pro"
-            description="Get the professional version, which includes advanced features of the Vscode extension, TodolistTreeView cross-platform desktop app, and cloud service support for subsequent plans."
+            short="Get the professional version"
+            id={VipProducts.TodolistTreeViewPro}
+            description={
+              <>
+                <div>Get the professional version, which includes:</div>
+                <div>1. Advanced features of the Vscode extension</div>
+                <div>2. TodolistTreeView cross-platform desktop app</div>
+                <div>3. Cloud service support for subsequent plans</div>
+              </>
+            }
             price="5$/mo"
           />
         </Col>

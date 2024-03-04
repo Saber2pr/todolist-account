@@ -1,18 +1,18 @@
 import { GetProductCheckoutResponse, GetProductResponse } from './interface'
-import { ApiUrls, VipProducts, request } from './request'
+import { ApiUrls, request } from './request'
 
-export const getProduct = async () => {
+export const getProduct = async (productId: string) => {
   const res = await request.get<GetProductResponse>(
-    `${ApiUrls.vipGetProduct}/${VipProducts.TodolistTreeViewPro}`,
+    `${ApiUrls.vipGetProduct}/${productId}`,
   )
 
-  return res
+  return res.data
 }
 
-export const getProductCheckout = async () => {
+export const getProductCheckout = async (productId: string) => {
   const res = await request.get<GetProductCheckoutResponse>(
-    `${ApiUrls.vipGetProductCheckout}/${VipProducts.TodolistTreeViewPro}`,
+    `${ApiUrls.vipGetProductCheckout}/${productId}`,
   )
 
-  return res
+  return res.data
 }
