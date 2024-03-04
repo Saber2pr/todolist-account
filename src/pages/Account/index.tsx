@@ -48,6 +48,9 @@ export const AccountPage: React.FC<AccountPageProps> = ({}) => {
         </Typography.Title>
       </Space>
       <Divider />
+      {data?.username && (
+        <Typography.Paragraph>Dear {data?.username} ~</Typography.Paragraph>
+      )}
       <Card title="Your Account">
         <Descriptions bordered column={1}>
           <Descriptions.Item label="UserId">
