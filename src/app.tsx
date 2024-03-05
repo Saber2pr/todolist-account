@@ -1,6 +1,6 @@
 import 'normalize.css'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { HashRouter, Route, Routes } from 'react-router-dom'
@@ -39,6 +39,23 @@ export const App = () => {
   useAsync(async () => {
     const res = await getProductCheckout(VipProducts.TodolistTreeViewPro)
     dispatch(commonSlice.actions.setProduct(res))
+  }, [])
+
+  useEffect(() => {
+    const handle = () => {
+      dispatch(
+        commonSlice.actions.setLoading({
+          loading: false,
+          text: '',
+        }),
+      )
+    }
+    window.addEventListener('popstate', handle)
+    window.addEventListener('hashchange', handle)
+    return () => {
+      window.removeEventListener('popstate', handle)
+      window.removeEventListener('hashchange', handle)
+    }
   }, [])
 
   return (
