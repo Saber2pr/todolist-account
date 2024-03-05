@@ -27,6 +27,7 @@ import { useAsync } from './hooks/useAsync'
 import { getProductCheckout } from './api/vip'
 import { VipProducts } from './api'
 import { commonSlice } from './store/common'
+import { Footer } from './components/footer'
 
 message.config({
   top: 48,
@@ -67,6 +68,7 @@ export const App = () => {
           </AsideContent>
         </Content>
       </Spin>
+      <Footer />
     </Container>
   )
 }

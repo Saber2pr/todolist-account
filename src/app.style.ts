@@ -12,6 +12,8 @@ export const Content = styled.div`
 export const MainContent = styled.div`
   width: 70%;
   padding-top: 16px;
+  padding-bottom: 60px;
+  min-height: 64vh;
 `
 export const AsideContent = styled.div`
   background-color: #f7f7f7;
