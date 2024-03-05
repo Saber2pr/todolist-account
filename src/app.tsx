@@ -42,6 +42,21 @@ export const App = () => {
     dispatch(commonSlice.actions.setProduct(res))
   }, [])
 
+  useEffect(() => {
+    const handle = () => {
+      dispatch(
+        commonSlice.actions.setLoading({
+          loading: false,
+          text: '',
+        }),
+      )
+    }
+    window.addEventListener('unload', handle)
+    return () => {
+      window.removeEventListener('unload', handle)
+    }
+  }, [])
+
   return (
     <Container>
       {/* @ts-ignore */}
