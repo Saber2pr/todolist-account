@@ -4,6 +4,7 @@ import { Card, Col, Divider, Image, Row, Typography } from 'antd'
 import { useFormModal } from '@/hooks/useFormModal'
 import { Product } from './Product'
 import { VipProducts } from '@/api'
+import { LinkOutlined } from '@ant-design/icons'
 
 export interface ProductsPageProps {}
 
@@ -26,11 +27,20 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({}) => {
               <>
                 <div>Get the professional version, which includes:</div>
                 <div>1. Advanced features of the Vscode extension</div>
-                <div>2. TodolistTreeView cross-platform desktop app</div>
+                <div>
+                  2. TodolistTreeView cross-platform
+                  <a
+                    style={{ marginLeft: 4 }}
+                    href="https://saber2pr.top/todolist-pro/posts/287994228/667772353/"
+                  >
+                    desktop app
+                    <LinkOutlined />
+                  </a>
+                </div>
                 <div>3. Cloud service support for subsequent plans</div>
               </>
             }
-            price="5$/mo"
+            price="4.99$/mo"
           />
         </Col>
       </Row>

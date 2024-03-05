@@ -105,7 +105,7 @@ export const Product: React.FC<ProductProps> = ({
                 {short}
               </Typography.Paragraph>
               <Footer>
-                <div style={{ flexGrow: 1 }}></div>
+                <div>{price}</div>
                 {product && (
                   <Tag.CheckableTag checked>
                     {isActive ? 'ACCEPTED' : 'GET'}
