@@ -41,23 +41,6 @@ export const App = () => {
     dispatch(commonSlice.actions.setProduct(res))
   }, [])
 
-  useEffect(() => {
-    const handle = () => {
-      dispatch(
-        commonSlice.actions.setLoading({
-          loading: false,
-          text: '',
-        }),
-      )
-    }
-    window.addEventListener('popstate', handle)
-    window.addEventListener('hashchange', handle)
-    return () => {
-      window.removeEventListener('popstate', handle)
-      window.removeEventListener('hashchange', handle)
-    }
-  }, [])
-
   return (
     <Container>
       {/* @ts-ignore */}

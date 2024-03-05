@@ -84,6 +84,12 @@ export const Product: React.FC<ProductProps> = ({
         (item) => item.rel === 'approve',
       )
       if (item) {
+        dispatch(
+          commonSlice.actions.setLoading({
+            loading: false,
+            text: '',
+          }),
+        )
         location.href = item.href
       } else {
         message.error('Product not found')
