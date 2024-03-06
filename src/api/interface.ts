@@ -147,6 +147,7 @@ export interface GetConfigResponse {
     id: number
     attributes: {
       todolistProductId: number
+      todolistProductEnabled: boolean
       createdAt: string
       updatedAt: string
       publishedAt: string

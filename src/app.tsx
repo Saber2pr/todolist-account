@@ -27,6 +27,7 @@ import { useAsync } from './hooks/useAsync'
 import { getProductCheckout } from './api/vip'
 import { commonSlice } from './store/common'
 import { Footer } from './components/footer'
+import { getConfig } from './api/common'
 
 message.config({
   top: 48,
@@ -37,7 +38,12 @@ export const App = () => {
   const dispatch = useAppDispatch()
 
   useAsync(async () => {
-    const res = await getProductCheckout()
+    const config = await getConfig()
+    dispatch(commonSlice.actions.setConfig(config))
+
+    const res = await getProductCheckout(
+      config?.data?.attributes?.todolistProductId,
+    )
     dispatch(commonSlice.actions.setProduct(res))
   }, [])
 

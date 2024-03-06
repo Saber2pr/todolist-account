@@ -35,17 +35,22 @@ export const Product: React.FC<ProductProps> = ({
   short,
 }) => {
   const product = useAppSelector((state) => state?.common?.product)
+  const config = useAppSelector((state) => state?.common?.config)
 
   const { data: productInfo, loading } = useAsync(async () => {
-    const product = await getProduct()
-    return product
-  }, [])
+    if (config) {
+      const product = await getProduct(
+        config?.data?.attributes?.todolistProductId,
+      )
+      return product
+    }
+  }, [config])
 
   const price = `${productInfo?.price || '-'}$/mo`
 
   const navigate = useNavigate()
 
-  const hasProduct = true
+  const hasProduct = config?.data?.attributes?.todolistProductEnabled
 
   const isActive = product?.status === 'ACTIVE'
 
