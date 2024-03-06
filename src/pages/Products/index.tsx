@@ -1,10 +1,11 @@
+import { Col, Divider, Row, Typography } from 'antd'
 import React from 'react'
-import { Contain, Img } from './index.style'
-import { Card, Col, Divider, Image, Row, Typography } from 'antd'
-import { useFormModal } from '@/hooks/useFormModal'
-import { Product } from './Product'
+
 import { VipProducts } from '@/api'
 import { LinkOutlined } from '@ant-design/icons'
+
+import { Contain } from './index.style'
+import { Product } from './Product'
 
 export interface ProductsPageProps {}
 

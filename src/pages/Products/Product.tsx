@@ -7,15 +7,16 @@ import {
   Typography,
   message,
 } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Footer, Img } from './index.style'
 import { useFormModal } from '@/hooks/useFormModal'
 import { getProduct } from '@/api/vip'
-import { VipProducts } from '@/api'
+import { VipProducts, getToken } from '@/api'
 import { getArray } from '@/utils'
 import { useAppDispatch, useAppSelector } from '@/store/store'
 import { commonSlice } from '@/store/common'
 import { SmileOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router'
 
 export interface ProductProps {
   id: string
@@ -35,6 +36,8 @@ export const Product: React.FC<ProductProps> = ({
   short,
 }) => {
   const product = useAppSelector((state) => state?.common?.product)
+
+  const navigate = useNavigate()
 
   const isActive = product?.status === 'ACTIVE'
 
@@ -95,7 +98,14 @@ export const Product: React.FC<ProductProps> = ({
       <Card
         hoverable
         cover={<Img src={img} />}
-        onClick={() => api.setShow(true)}
+        onClick={() => {
+          if (getToken()) {
+            api.setShow(true)
+          } else {
+            message.info('Please sign in first')
+            navigate('/login')
+          }
+        }}
       >
         <Card.Meta
           title={title}
