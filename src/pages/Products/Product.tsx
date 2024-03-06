@@ -41,7 +41,7 @@ export const Product: React.FC<ProductProps> = ({
 
   const navigate = useNavigate()
 
-  const hasProduct = !!product?.id
+  const hasProduct = true
 
   const isActive = product?.status === 'ACTIVE'
 
