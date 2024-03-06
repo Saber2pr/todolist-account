@@ -1,4 +1,5 @@
 import {
+  Badge,
   Card,
   Descriptions,
   Divider,
@@ -25,6 +26,7 @@ export interface ProductProps {
   short: string
   description: React.ReactNode
   price: string
+  disabled?: boolean
 }
 
 export const Product: React.FC<ProductProps> = ({
@@ -38,6 +40,8 @@ export const Product: React.FC<ProductProps> = ({
   const product = useAppSelector((state) => state?.common?.product)
 
   const navigate = useNavigate()
+
+  const hasProduct = !!product?.id
 
   const isActive = product?.status === 'ACTIVE'
 
@@ -94,11 +98,17 @@ export const Product: React.FC<ProductProps> = ({
     },
   })
   return (
-    <>
+    <Badge.Ribbon text="New" color="volcano">
       <Card
         hoverable
         cover={<Img src={img} />}
         onClick={() => {
+          if (!hasProduct) {
+            message.error(
+              'The product is temporarily not available for purchase',
+            )
+            return
+          }
           if (getToken()) {
             api.setShow(true)
           } else {
@@ -127,6 +137,6 @@ export const Product: React.FC<ProductProps> = ({
         />
       </Card>
       {api.modal}
-    </>
+    </Badge.Ribbon>
   )
 }
