@@ -1,11 +1,11 @@
 import { Col, Divider, Row, Typography } from 'antd'
 import React from 'react'
 
-import { VipProducts } from '@/api'
 import { LinkOutlined } from '@ant-design/icons'
 
 import { Contain } from './index.style'
 import { Product } from './Product'
+import { useAppSelector } from '@/store/store'
 
 export interface ProductsPageProps {}
 
@@ -23,7 +23,6 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({}) => {
             img="//saber2pr.top/MyWeb/resource/image/todolist-logo.png"
             title="TodolistTreeView Pro"
             short="Get the professional version"
-            id={VipProducts.TodolistTreeViewPro}
             description={
               <>
                 <div>Get the professional version, which includes:</div>
@@ -41,7 +40,6 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({}) => {
                 <div>3. Cloud service support for subsequent plans</div>
               </>
             }
-            price="4.99$/mo"
           />
         </Col>
       </Row>

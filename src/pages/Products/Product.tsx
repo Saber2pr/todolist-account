@@ -3,41 +3,45 @@ import {
   Card,
   Descriptions,
   Divider,
-  Modal,
+  message,
   Tag,
   Typography,
-  message,
 } from 'antd'
-import React, { useEffect } from 'react'
-import { Footer, Img } from './index.style'
-import { useFormModal } from '@/hooks/useFormModal'
-import { getProduct } from '@/api/vip'
-import { VipProducts, getToken } from '@/api'
-import { getArray } from '@/utils'
-import { useAppDispatch, useAppSelector } from '@/store/store'
-import { commonSlice } from '@/store/common'
-import { SmileOutlined } from '@ant-design/icons'
+import React from 'react'
 import { useNavigate } from 'react-router'
 
+import { getToken } from '@/api'
+import { getProduct } from '@/api/vip'
+import { useAsync } from '@/hooks/useAsync'
+import { useFormModal } from '@/hooks/useFormModal'
+import { commonSlice } from '@/store/common'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import { getArray } from '@/utils'
+
+import { Footer, Img } from './index.style'
+
 export interface ProductProps {
-  id: string
   img: string
   title: string
   short: string
   description: React.ReactNode
-  price: string
   disabled?: boolean
 }
 
 export const Product: React.FC<ProductProps> = ({
-  id,
   img,
   title,
   description,
-  price,
   short,
 }) => {
   const product = useAppSelector((state) => state?.common?.product)
+
+  const { data: productInfo, loading } = useAsync(async () => {
+    const product = await getProduct()
+    return product
+  }, [])
+
+  const price = `${productInfo?.price || '-'}$/mo`
 
   const navigate = useNavigate()
 
@@ -54,6 +58,7 @@ export const Product: React.FC<ProductProps> = ({
       okText: 'Accept',
       centered: true,
       width: 600,
+      okButtonProps: { loading },
     },
     forms: (
       <>
@@ -86,14 +91,15 @@ export const Product: React.FC<ProductProps> = ({
           text: 'Get Product Payment Details ...',
         }),
       )
-      const res = await getProduct(VipProducts.TodolistTreeViewPro)
-      const item = getArray(res?.paypalLinks).find(
-        (item) => item.rel === 'approve',
-      )
-      if (item) {
-        location.href = item.href
-      } else {
-        message.error('Product not found')
+      if (productInfo) {
+        const item = getArray(productInfo?.paypalLinks).find(
+          (item) => item.rel === 'approve',
+        )
+        if (item) {
+          location.href = item.href
+        } else {
+          message.error('Product not found')
+        }
       }
     },
   })

@@ -25,7 +25,6 @@ import { ProductsPage } from './pages/Products'
 import { Spin, message } from 'antd'
 import { useAsync } from './hooks/useAsync'
 import { getProductCheckout } from './api/vip'
-import { VipProducts } from './api'
 import { commonSlice } from './store/common'
 import { Footer } from './components/footer'
 
@@ -38,7 +37,7 @@ export const App = () => {
   const dispatch = useAppDispatch()
 
   useAsync(async () => {
-    const res = await getProductCheckout(VipProducts.TodolistTreeViewPro)
+    const res = await getProductCheckout()
     dispatch(commonSlice.actions.setProduct(res))
   }, [])
 

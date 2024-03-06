@@ -141,3 +141,16 @@ export interface GetProductCheckoutResponse {
   plan_overridden: boolean
   links: Array<{ href: string; rel: string; method: string }>
 }
+
+export interface GetConfigResponse {
+  data: {
+    id: number
+    attributes: {
+      todolistProductId: number
+      createdAt: string
+      updatedAt: string
+      publishedAt: string
+    }
+  }
+  meta: {}
+}
