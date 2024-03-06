@@ -98,7 +98,10 @@ export const Product: React.FC<ProductProps> = ({
     },
   })
   return (
-    <Badge.Ribbon text="New" color="volcano">
+    <Badge.Ribbon
+      text={hasProduct ? 'New' : 'Preparing'}
+      color={hasProduct ? 'volcano' : 'gray'}
+    >
       <Card
         hoverable
         cover={<Img src={img} />}
