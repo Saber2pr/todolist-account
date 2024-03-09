@@ -10,11 +10,10 @@ import {
 import React from 'react'
 import { useNavigate } from 'react-router'
 
-import { getUserInfo, setCode } from '@/api'
+import { setCode } from '@/api'
 import { useAsync } from '@/hooks/useAsync'
 import { useHasProduct } from '@/hooks/useHasProduct'
-import { commonSlice } from '@/store/common'
-import { useAppDispatch } from '@/store/store'
+import { useAppSelector } from '@/store/store'
 import { formatTimeStr } from '@/utils/date'
 import { parseUrlParam } from '@/utils/parseUrlParam'
 
@@ -24,22 +23,18 @@ import { Contain } from './index.style'
 export interface AccountPageProps {}
 
 export const AccountPage: React.FC<AccountPageProps> = ({}) => {
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const isActive = useHasProduct()
+  const data = useAppSelector((state) => state?.common?.userInfo)
 
-  const { data, loading } = useAsync(async () => {
+  const { loading } = useAsync(async () => {
     const query = parseUrlParam(location.search)
     if (query?.code) {
       setCode(query?.code)
       navigate('/confirmReset')
       return
     }
-
-    const userInfo = await getUserInfo()
-    dispatch(commonSlice.actions.setUserInfo(userInfo))
-    return userInfo
   }, [])
 
   if (loading) {

@@ -28,6 +28,7 @@ import { getProductCheckout } from './api/vip'
 import { commonSlice } from './store/common'
 import { Footer } from './components/footer'
 import { getConfig } from './api/common'
+import { getUserInfo } from './api'
 
 message.config({
   top: 48,
@@ -37,7 +38,10 @@ export const App = () => {
   const loadingInfo = useAppSelector((state) => state?.common?.loadingInfo)
   const dispatch = useAppDispatch()
 
-  useAsync(async () => {
+  const { loading } = useAsync(async () => {
+    const userInfo = await getUserInfo()
+    dispatch(commonSlice.actions.setUserInfo(userInfo))
+
     const config = await getConfig()
     dispatch(commonSlice.actions.setConfig(config))
   }, [])
@@ -62,7 +66,7 @@ export const App = () => {
       {/* @ts-ignore */}
       <GlobalStyle />
       <Header />
-      <Spin spinning={loadingInfo?.loading} tip={loadingInfo?.text}>
+      <Spin spinning={loadingInfo?.loading || loading} tip={loadingInfo?.text}>
         <Content>
           <MainContent>
             <Routes>

@@ -1,17 +1,25 @@
-import { Badge, Card, Descriptions, Divider, message, Tag, Typography } from 'antd';
-import React from 'react';
-import { useNavigate } from 'react-router';
+import {
+  Badge,
+  Card,
+  Descriptions,
+  Divider,
+  message,
+  Tag,
+  Typography,
+} from 'antd'
+import React from 'react'
+import { useNavigate } from 'react-router'
 
-import { getToken } from '@/api';
-import { getProduct } from '@/api/vip';
-import { useAsync } from '@/hooks/useAsync';
-import { useFormModal } from '@/hooks/useFormModal';
-import { useHasProduct } from '@/hooks/useHasProduct';
-import { commonSlice } from '@/store/common';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-import { getArray } from '@/utils';
+import { getToken } from '@/api'
+import { getProduct } from '@/api/vip'
+import { useAsync } from '@/hooks/useAsync'
+import { useFormModal } from '@/hooks/useFormModal'
+import { useHasProduct } from '@/hooks/useHasProduct'
+import { commonSlice } from '@/store/common'
+import { useAppDispatch, useAppSelector } from '@/store/store'
+import { getArray } from '@/utils'
 
-import { Footer, Img } from './index.style';
+import { Footer, Img } from './index.style'
 
 export interface ProductProps {
   img: string
@@ -42,7 +50,7 @@ export const Product: React.FC<ProductProps> = ({
 
   const navigate = useNavigate()
 
-  const hasProduct = config?.data?.attributes?.todolistProductEnabled
+  const hasProduct = 1 || config?.data?.attributes?.todolistProductEnabled
 
   const isActive = useHasProduct()
 
