@@ -23,8 +23,8 @@ export const ApiUrls = {
   forgot: `/api/auth/forgot-password`,
   reset: `/api/auth/reset-password`,
   config: `/api/config`,
-  vipGetProduct: '/strapi-paypal/getProduct',
-  vipGetProductCheckout: '/strapi-paypal/getPaypalCheckout',
+  vipGetProduct: '/api/strapi-paypal/getProduct',
+  vipGetProductCheckout: '/api/strapi-paypal/getPaypalCheckout',
 }
 
 const WhiteUrls = [
