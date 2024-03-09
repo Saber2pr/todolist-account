@@ -1,6 +1,11 @@
 import { message } from 'antd'
-import { getConfig } from './common'
-import { GetProductCheckoutResponse, GetProductResponse } from './interface'
+
+import {
+  CreateProductPaymentResponse,
+  GetProductCheckoutResponse,
+  GetProductPayments,
+  GetProductResponse,
+} from './interface'
 import { ApiUrls, request } from './request'
 
 export const getProduct = async (todolistProductId: number) => {
@@ -16,14 +21,38 @@ export const getProduct = async (todolistProductId: number) => {
   return res.data
 }
 
-export const getProductCheckout = async (todolistProductId: number) => {
-  if (!todolistProductId) {
-    message.error('Product Not Found')
+export const getProductCheckout = async (orderId: string) => {
+  if (!orderId) {
+    message.error('OrderId Not Found')
     return
   }
 
   const res = await request.get<GetProductCheckoutResponse>(
-    `${ApiUrls.vipGetProductCheckout}/${todolistProductId}`,
+    `${ApiUrls.vipGetProductCheckout}/${orderId}`,
+  )
+
+  return res.data
+}
+
+export const createProductPayment = async (planId: string) => {
+  if (!planId) {
+    message.error('PlanId Not Found')
+    return
+  }
+
+  const res = await request.post<CreateProductPaymentResponse>(
+    `${ApiUrls.vipCreatePayment}`,
+    {
+      planId,
+    },
+  )
+
+  return res.data
+}
+
+export const getProductPayments = async (offset: number, limit: number) => {
+  const res = await request.get<GetProductPayments>(
+    `${ApiUrls.vipGetPayments}/${offset}/${limit}`,
   )
 
   return res.data

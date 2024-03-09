@@ -5,7 +5,7 @@ import { LinkOutlined } from '@ant-design/icons'
 
 import { Contain } from './index.style'
 import { Product } from './Product'
-import { useAppSelector } from '@/store/store'
+import { PaymentList } from '@/components/paymentList'
 
 export interface ProductsPageProps {}
 
@@ -43,6 +43,8 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({}) => {
           />
         </Col>
       </Row>
+      <Divider />
+      <PaymentList />
     </Contain>
   )
 }

@@ -7,11 +7,11 @@ import {
   Tag,
   Typography,
 } from 'antd'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router'
 
 import { getToken } from '@/api'
-import { getProduct } from '@/api/vip'
+import { createProductPayment, getProduct, getProductPayments } from '@/api/vip'
 import { useAsync } from '@/hooks/useAsync'
 import { useFormModal } from '@/hooks/useFormModal'
 import { useHasProduct } from '@/hooks/useHasProduct'
@@ -36,6 +36,12 @@ export const Product: React.FC<ProductProps> = ({
   short,
 }) => {
   const config = useAppSelector((state) => state?.common?.config)
+  const payments = useAppSelector((state) => state?.common?.payments)
+
+  const hasPaymentOrder = useMemo(
+    () => getArray(payments).filter((item) => !item.isTxnSuccessful).length > 0,
+    [payments],
+  )
 
   const { data: productInfo, loading } = useAsync(async () => {
     if (config) {
@@ -90,6 +96,12 @@ export const Product: React.FC<ProductProps> = ({
         message.info('You have already got this product')
         return
       }
+      if (hasPaymentOrder) {
+        const needReCreate = confirm(
+          'There is an unfinished order. Do you want to re-create the order?',
+        )
+        if (!needReCreate) return
+      }
       dispatch(
         commonSlice.actions.setLoading({
           loading: true,
@@ -97,10 +109,11 @@ export const Product: React.FC<ProductProps> = ({
         }),
       )
       if (productInfo) {
-        const item = getArray(productInfo?.paypalLinks).find(
-          (item) => item.rel === 'approve',
-        )
-        if (item) {
+        const payment = await createProductPayment(productInfo?.paypalPlanId)
+        if (payment) {
+          const item = getArray(payment?.paymentLinks).find(
+            (item) => item.rel === 'approve',
+          )
           location.href = item.href
         } else {
           message.error('Product not found')

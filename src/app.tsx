@@ -24,11 +24,12 @@ import { AboutPage } from './pages/About'
 import { ProductsPage } from './pages/Products'
 import { Spin, message } from 'antd'
 import { useAsync } from './hooks/useAsync'
-import { getProductCheckout } from './api/vip'
+import { getProductCheckout, getProductPayments } from './api/vip'
 import { commonSlice } from './store/common'
 import { Footer } from './components/footer'
 import { getConfig } from './api/common'
 import { getUserInfo } from './api'
+import { getArray } from './utils'
 
 message.config({
   top: 48,
@@ -44,6 +45,9 @@ export const App = () => {
 
     const config = await getConfig()
     dispatch(commonSlice.actions.setConfig(config))
+
+    const payments = await getProductPayments(0, 10)
+    dispatch(commonSlice.actions.setPayments(getArray(payments?.response)))
   }, [])
 
   useEffect(() => {

@@ -82,6 +82,7 @@ export interface GetProductResponse {
   paypalPayment: Array<undefined>
   createdBy: object
   updatedBy: object
+  paypalPlanId: string
 }
 
 export interface GetProductCheckoutResponse {
@@ -154,4 +155,41 @@ export interface GetConfigResponse {
     }
   }
   meta: {}
+}
+
+export interface CreateProductPaymentResponse {
+  id: number
+  txnDate: string
+  transactionId: string
+  isTxnSuccessful: boolean
+  txnMessage: object
+  txnErrorMessage: object
+  txnAmount: object
+  createdAt: string
+  updatedAt: string
+  customerId: string
+  paymentLinks: Array<{ rel: string; href: string; method: string }>
+  paypalProduct: object
+  createdBy: object
+  updatedBy: object
+}
+
+export interface GetProductPayments {
+  response: Array<{
+    id: number
+    txnDate: string
+    transactionId: string
+    isTxnSuccessful: boolean
+    txnMessage: object
+    txnErrorMessage: object
+    txnAmount: object
+    createdAt: string
+    updatedAt: string
+    customerId: string
+    paymentLinks: Array<{ rel: string; href: string; method: string }>
+    paypalProduct: object
+    createdBy: object
+    updatedBy: object
+  }>
+  count: number
 }
