@@ -12,13 +12,14 @@ import { useNavigate } from 'react-router'
 
 import { getUserInfo, setCode } from '@/api'
 import { useAsync } from '@/hooks/useAsync'
+import { useHasProduct } from '@/hooks/useHasProduct'
 import { commonSlice } from '@/store/common'
-import { useAppDispatch, useAppSelector } from '@/store/store'
+import { useAppDispatch } from '@/store/store'
 import { formatTimeStr } from '@/utils/date'
 import { parseUrlParam } from '@/utils/parseUrlParam'
 
-import { Contain } from './index.style'
 import { Logo } from '../confirmReset/index.style'
+import { Contain } from './index.style'
 
 export interface AccountPageProps {}
 
@@ -26,9 +27,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({}) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const product = useAppSelector((state) => state?.common?.product)
-
-  const isActive = product?.status === 'ACTIVE'
+  const isActive = useHasProduct()
 
   const { data, loading } = useAsync(async () => {
     const query = parseUrlParam(location.search)

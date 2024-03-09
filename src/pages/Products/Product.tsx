@@ -1,24 +1,17 @@
-import {
-  Badge,
-  Card,
-  Descriptions,
-  Divider,
-  message,
-  Tag,
-  Typography,
-} from 'antd'
-import React from 'react'
-import { useNavigate } from 'react-router'
+import { Badge, Card, Descriptions, Divider, message, Tag, Typography } from 'antd';
+import React from 'react';
+import { useNavigate } from 'react-router';
 
-import { getToken } from '@/api'
-import { getProduct } from '@/api/vip'
-import { useAsync } from '@/hooks/useAsync'
-import { useFormModal } from '@/hooks/useFormModal'
-import { commonSlice } from '@/store/common'
-import { useAppDispatch, useAppSelector } from '@/store/store'
-import { getArray } from '@/utils'
+import { getToken } from '@/api';
+import { getProduct } from '@/api/vip';
+import { useAsync } from '@/hooks/useAsync';
+import { useFormModal } from '@/hooks/useFormModal';
+import { useHasProduct } from '@/hooks/useHasProduct';
+import { commonSlice } from '@/store/common';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { getArray } from '@/utils';
 
-import { Footer, Img } from './index.style'
+import { Footer, Img } from './index.style';
 
 export interface ProductProps {
   img: string
@@ -34,7 +27,6 @@ export const Product: React.FC<ProductProps> = ({
   description,
   short,
 }) => {
-  const product = useAppSelector((state) => state?.common?.product)
   const config = useAppSelector((state) => state?.common?.config)
 
   const { data: productInfo, loading } = useAsync(async () => {
@@ -52,7 +44,7 @@ export const Product: React.FC<ProductProps> = ({
 
   const hasProduct = config?.data?.attributes?.todolistProductEnabled
 
-  const isActive = product?.status === 'ACTIVE'
+  const isActive = useHasProduct()
 
   const dispatch = useAppDispatch()
   const api = useFormModal({
@@ -140,11 +132,9 @@ export const Product: React.FC<ProductProps> = ({
               </Typography.Paragraph>
               <Footer>
                 <div>{price}</div>
-                {product && (
-                  <Tag.CheckableTag checked>
-                    {isActive ? 'ACCEPTED' : 'GET'}
-                  </Tag.CheckableTag>
-                )}
+                <Tag.CheckableTag checked>
+                  {isActive ? 'ACCEPTED' : 'GET'}
+                </Tag.CheckableTag>
               </Footer>
             </>
           }

@@ -1,8 +1,4 @@
-import {
-  GerUserInfoResponse,
-  GetConfigResponse,
-  GetProductCheckoutResponse,
-} from '@/api/interface'
+import { GerUserInfoResponse, GetConfigResponse } from '@/api/interface'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const commonSlice = createSlice({
@@ -13,7 +9,6 @@ export const commonSlice = createSlice({
       loading: false,
       text: '',
     },
-    product: null as GetProductCheckoutResponse,
     config: null as GetConfigResponse,
   },
   reducers: {
@@ -22,9 +17,6 @@ export const commonSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loadingInfo = action.payload
-    },
-    setProduct: (state, action) => {
-      state.product = action.payload
     },
     setConfig: (state, action) => {
       state.config = action.payload

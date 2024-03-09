@@ -40,11 +40,6 @@ export const App = () => {
   useAsync(async () => {
     const config = await getConfig()
     dispatch(commonSlice.actions.setConfig(config))
-
-    const res = await getProductCheckout(
-      config?.data?.attributes?.todolistProductId,
-    )
-    dispatch(commonSlice.actions.setProduct(res))
   }, [])
 
   useEffect(() => {
