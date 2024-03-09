@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tag, Typography } from 'antd'
+import { Alert, Button, Space, Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import React from 'react'
 
@@ -28,6 +28,13 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
       manual: true,
     },
   )
+
+  useAsync(async () => {
+    const firstOrder = getArray(payments).find((item) => !item.isTxnSuccessful)
+    if (firstOrder) {
+      await checkoutOrder(firstOrder)
+    }
+  }, [payments])
 
   const columns: ColumnsType<GetProductPayments['response'][0]> = [
     {
@@ -96,6 +103,11 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
         columns={columns}
         dataSource={getArray(payments)}
         pagination={false}
+      />
+      <Alert
+        style={{ marginTop: 16 }}
+        type="info"
+        message="Payment completed but no changes? Try to click Refresh"
       />
     </Contain>
   )
