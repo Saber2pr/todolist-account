@@ -56,7 +56,7 @@ export const Product: React.FC<ProductProps> = ({
 
   const navigate = useNavigate()
 
-  const hasProduct = 1 || config?.data?.attributes?.todolistProductEnabled
+  const hasProduct = config?.data?.attributes?.todolistProductEnabled
 
   const isActive = useHasProduct()
 
