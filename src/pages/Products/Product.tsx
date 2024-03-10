@@ -52,8 +52,7 @@ export const Product: React.FC<ProductProps> = ({
 
   const hasProduct = 1 || config?.data?.attributes?.todolistProductEnabled
 
-  // const isActive = useHasProduct()
-  const isActive = false
+  const isActive = useHasProduct()
 
   const dispatch = useAppDispatch()
   const api = useFormModal({
