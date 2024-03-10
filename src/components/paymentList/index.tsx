@@ -56,10 +56,13 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
     run: refreshList,
   } = useAsync(async () => {
     const payments = await getProductPayments(current * PageSize, PageSize)
-    return payments
+    return {
+      response: getArray(payments)[0] as GetProductPayments[0],
+      count: getArray(payments)[1] as GetProductPayments[1],
+    }
   }, [current])
 
-  const columns: ColumnsType<GetProductPayments['response'][0]> = [
+  const columns: ColumnsType<GetProductPayments[0][0]> = [
     {
       title: 'ID',
       dataIndex: 'id',

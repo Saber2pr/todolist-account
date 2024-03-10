@@ -174,8 +174,8 @@ export interface CreateProductPaymentResponse {
   updatedBy: object
 }
 
-export interface GetProductPayments {
-  response: Array<{
+export type GetProductPayments = [
+  Array<{
     id: number
     txnDate: string
     transactionId: string
@@ -191,6 +191,6 @@ export interface GetProductPayments {
     paypalProduct: object
     createdBy: object
     updatedBy: object
-  }>
-  count: number
-}
+  }>,
+  number,
+]
