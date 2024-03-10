@@ -12,7 +12,7 @@ import { Contain } from './index.style'
 export interface PaymentListProps {}
 
 const StatusColor = {
-  pending: 'unset',
+  pending: '#FF5722',
   active: 'green',
   inactive: 'gray',
 }
