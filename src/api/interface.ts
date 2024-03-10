@@ -186,6 +186,7 @@ export interface GetProductPayments {
     createdAt: string
     updatedAt: string
     customerId: string
+    status: 'pending' | 'active' | 'inactive'
     paymentLinks: Array<{ rel: string; href: string; method: string }>
     paypalProduct: object
     createdBy: object

@@ -36,12 +36,6 @@ export const Product: React.FC<ProductProps> = ({
   short,
 }) => {
   const config = useAppSelector((state) => state?.common?.config)
-  const payments = useAppSelector((state) => state?.common?.payments)
-
-  const hasPaymentOrder = useMemo(
-    () => getArray(payments).filter((item) => !item.isTxnSuccessful).length > 0,
-    [payments],
-  )
 
   const { data: productInfo, loading } = useAsync(async () => {
     if (config) {
@@ -56,9 +50,10 @@ export const Product: React.FC<ProductProps> = ({
 
   const navigate = useNavigate()
 
-  const hasProduct = config?.data?.attributes?.todolistProductEnabled
+  const hasProduct = 1 || config?.data?.attributes?.todolistProductEnabled
 
-  const isActive = useHasProduct()
+  // const isActive = useHasProduct()
+  const isActive = false
 
   const dispatch = useAppDispatch()
   const api = useFormModal({
@@ -96,12 +91,7 @@ export const Product: React.FC<ProductProps> = ({
         message.info('You have already got this product')
         return
       }
-      if (hasPaymentOrder) {
-        const needReCreate = confirm(
-          'There is an unfinished order. Do you want to re-create the order?',
-        )
-        if (!needReCreate) return
-      }
+
       dispatch(
         commonSlice.actions.setLoading({
           loading: true,

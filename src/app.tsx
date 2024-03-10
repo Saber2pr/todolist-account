@@ -1,10 +1,13 @@
 import 'normalize.css'
 
+import { message, Spin } from 'antd'
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 
+import { getUserInfo } from './api'
+import { getConfig } from './api/common'
 import {
   AsideContent,
   Container,
@@ -12,24 +15,19 @@ import {
   GlobalStyle,
   MainContent,
 } from './app.style'
+import { AsideMenu } from './components/aside-menu'
+import { Footer } from './components/footer'
 import { Header } from './components/header'
+import { useAsync } from './hooks/useAsync'
+import { AboutPage } from './pages/About'
 import { AccountPage } from './pages/Account'
 import { ConfirmResetPage } from './pages/confirmReset'
 import { LoginPage } from './pages/Login'
+import { ProductsPage } from './pages/Products'
 import { RegisterPage } from './pages/Register'
 import { ResetPage } from './pages/Reset'
-import { store, useAppDispatch, useAppSelector } from './store/store'
-import { AsideMenu } from './components/aside-menu'
-import { AboutPage } from './pages/About'
-import { ProductsPage } from './pages/Products'
-import { Spin, message } from 'antd'
-import { useAsync } from './hooks/useAsync'
-import { getProductCheckout, getProductPayments } from './api/vip'
 import { commonSlice } from './store/common'
-import { Footer } from './components/footer'
-import { getConfig } from './api/common'
-import { getUserInfo } from './api'
-import { getArray } from './utils'
+import { store, useAppDispatch, useAppSelector } from './store/store'
 
 message.config({
   top: 48,
@@ -45,9 +43,6 @@ export const App = () => {
 
     const config = await getConfig()
     dispatch(commonSlice.actions.setConfig(config))
-
-    const payments = await getProductPayments(0, 10)
-    dispatch(commonSlice.actions.setPayments(getArray(payments?.response)))
   }, [])
 
   useEffect(() => {

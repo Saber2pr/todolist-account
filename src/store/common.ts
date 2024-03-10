@@ -14,7 +14,6 @@ export const commonSlice = createSlice({
       text: '',
     },
     config: null as GetConfigResponse,
-    payments: [] as GetProductPayments['response'],
   },
   reducers: {
     setUserInfo: (state, action) => {
@@ -25,9 +24,6 @@ export const commonSlice = createSlice({
     },
     setConfig: (state, action) => {
       state.config = action.payload
-    },
-    setPayments: (state, action) => {
-      state.payments = action.payload
     },
   },
 })

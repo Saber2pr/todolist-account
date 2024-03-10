@@ -1,40 +1,63 @@
 import { Alert, Button, Space, Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { GetProductPayments } from '@/api/interface'
-import { useAppDispatch, useAppSelector } from '@/store/store'
+import { getProductCheckout, getProductPayments } from '@/api/vip'
+import { useAsync } from '@/hooks/useAsync'
 import { getArray } from '@/utils'
 
 import { Contain } from './index.style'
-import { getProductCheckout, getProductPayments } from '@/api/vip'
-import { useAsync } from '@/hooks/useAsync'
-import { commonSlice } from '@/store/common'
 
 export interface PaymentListProps {}
 
-export const PaymentList: React.FC<PaymentListProps> = ({}) => {
-  const payments = useAppSelector((state) => state?.common?.payments)
-  const dispatch = useAppDispatch()
+const StatusColor = {
+  pending: 'unset',
+  active: 'green',
+  inactive: 'gray',
+}
 
-  const { loading, run: checkoutOrder } = useAsync(
+const CheckoutButton: React.FC<{
+  refreshList: () => Promise<any>
+  transactionId: string
+}> = ({ refreshList, transactionId }) => {
+  const { loading: checkLoading, run: checkoutOrder } = useAsync(
     async (orderId) => {
       await getProductCheckout(orderId)
-      const payments = await getProductPayments(0, 10)
-      dispatch(commonSlice.actions.setPayments(getArray(payments?.response)))
+      await refreshList()
     },
-    [],
+    [transactionId],
     {
       manual: true,
     },
   )
 
-  useAsync(async () => {
-    const firstOrder = getArray(payments).find((item) => !item.isTxnSuccessful)
-    if (firstOrder) {
-      await checkoutOrder(firstOrder)
-    }
-  }, [payments])
+  return (
+    <Button
+      type="link"
+      loading={checkLoading}
+      onClick={async () => {
+        checkoutOrder(transactionId)
+      }}
+    >
+      Refresh
+    </Button>
+  )
+}
+
+const PageSize = 10
+
+export const PaymentList: React.FC<PaymentListProps> = ({}) => {
+  const [current, setCurrent] = useState(0)
+
+  const {
+    loading,
+    data,
+    run: refreshList,
+  } = useAsync(async () => {
+    const payments = await getProductPayments(current * PageSize, PageSize)
+    return payments
+  }, [current])
 
   const columns: ColumnsType<GetProductPayments['response'][0]> = [
     {
@@ -50,16 +73,16 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
       dataIndex: 'transactionId',
     },
     {
-      title: 'IsTxnSuccessful',
-      dataIndex: 'isTxnSuccessful',
-      render: (value) => (
-        <Tag.CheckableTag
-          checked
-          style={{ background: value ? 'green' : 'gray' }}
-        >
-          {value ? 'YES' : 'NO'}
-        </Tag.CheckableTag>
-      ),
+      title: 'Status',
+      dataIndex: 'status',
+      render: (value) => {
+        if (typeof value !== 'string') return <span>Unknown</span>
+        return (
+          <Tag.CheckableTag checked style={{ background: StatusColor[value] }}>
+            {value.toUpperCase()}
+          </Tag.CheckableTag>
+        )
+      },
     },
     {
       title: 'Operate',
@@ -76,22 +99,17 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
             <a target="_blank" href={item?.href}>
               Approve
             </a>
-            <Button
-              type="link"
-              loading={loading}
-              onClick={async () => {
-                checkoutOrder(record?.transactionId)
-              }}
-            >
-              Refresh
-            </Button>
+            <CheckoutButton
+              refreshList={refreshList}
+              transactionId={record?.transactionId}
+            />
           </Space>
         )
       },
     },
   ]
 
-  if (getArray(payments).length === 0) {
+  if (data?.count === 0) {
     return <></>
   }
 
@@ -99,10 +117,19 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
     <Contain>
       <Typography.Title level={5}>Payment Order</Typography.Title>
       <Table
+        loading={loading}
         rowKey="id"
         columns={columns}
-        dataSource={getArray(payments)}
-        pagination={false}
+        dataSource={getArray(data?.response)}
+        pagination={{
+          current: current + 1,
+          total: data?.count,
+          pageSize: PageSize,
+          hideOnSinglePage: true,
+          onChange(page) {
+            setCurrent(page - 1)
+          },
+        }}
       />
       <Alert
         style={{ marginTop: 16 }}
