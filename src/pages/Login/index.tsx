@@ -60,7 +60,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
               label="Username"
               rules={[{ required: true }]}
             >
-              <Input placeholder="your nick name" />
+              <Input placeholder="your nick name or email" />
             </Form.Item>
             <Form.Item
               name="password"
