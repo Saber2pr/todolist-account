@@ -38,11 +38,11 @@ export const App = () => {
   const dispatch = useAppDispatch()
 
   const { loading } = useAsync(async () => {
-    const userInfo = await getUserInfo()
-    dispatch(commonSlice.actions.setUserInfo(userInfo))
-
     const config = await getConfig()
     dispatch(commonSlice.actions.setConfig(config))
+
+    const userInfo = await getUserInfo()
+    dispatch(commonSlice.actions.setUserInfo(userInfo))
   }, [])
 
   useEffect(() => {
