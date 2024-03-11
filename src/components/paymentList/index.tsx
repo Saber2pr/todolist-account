@@ -8,6 +8,7 @@ import { useAsync } from '@/hooks/useAsync'
 import { getArray } from '@/utils'
 
 import { Contain } from './index.style'
+import { checkOrderTimeout, formatTimeStr } from '@/utils/date'
 
 export interface PaymentListProps {}
 
@@ -70,6 +71,7 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
     {
       title: 'TxnDate',
       dataIndex: 'txnDate',
+      render: (value) => formatTimeStr(value),
     },
     {
       title: 'TransactionId',
@@ -78,7 +80,12 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
     {
       title: 'Status',
       dataIndex: 'status',
-      render: (value) => {
+      render: (value, record) => {
+        const isTimeout = checkOrderTimeout(record?.createdAt)
+        if (isTimeout && record.status === 'pending') {
+          return <span>Timeout</span>
+        }
+
         if (typeof value !== 'string') return <span>Unknown</span>
         return (
           <Tag.CheckableTag checked style={{ background: StatusColor[value] }}>
@@ -90,6 +97,11 @@ export const PaymentList: React.FC<PaymentListProps> = ({}) => {
     {
       title: 'Operate',
       render: (_, record) => {
+        const isTimeout = checkOrderTimeout(record?.createdAt)
+        if (isTimeout && record.status === 'pending') {
+          return <span>Order Timeout</span>
+        }
+
         const item = getArray(record?.paymentLinks).find(
           (item) => item.rel === 'approve',
         )
