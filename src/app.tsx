@@ -4,9 +4,9 @@ import { message, Spin } from 'antd'
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes, useNavigate } from 'react-router-dom'
 
-import { getUserInfo } from './api'
+import { getUserInfo, setCode } from './api'
 import { getConfig } from './api/common'
 import {
   AsideContent,
@@ -28,6 +28,7 @@ import { RegisterPage } from './pages/Register'
 import { ResetPage } from './pages/Reset'
 import { commonSlice } from './store/common'
 import { store, useAppDispatch, useAppSelector } from './store/store'
+import { parseUrlParam } from './utils/parseUrlParam'
 
 message.config({
   top: 48,
@@ -36,10 +37,18 @@ message.config({
 export const App = () => {
   const loadingInfo = useAppSelector((state) => state?.common?.loadingInfo)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const { loading } = useAsync(async () => {
     const config = await getConfig()
     dispatch(commonSlice.actions.setConfig(config))
+
+    const query = parseUrlParam(location.search)
+    if (query?.code) {
+      setCode(query?.code)
+      navigate('/confirmReset')
+      return
+    }
 
     const userInfo = await getUserInfo()
     dispatch(commonSlice.actions.setUserInfo(userInfo))
