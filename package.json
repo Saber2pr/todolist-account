@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=development webpack -w",
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "lint": "prettier --write ./src",
-    "build": "rimraf ./build && cross-env NODE_ENV=production webpack",
+    "build": "rimraf ./build && cross-env NODE_ENV=production webpack && cp ./public/* ./build",
     "prepare": "husky install"
   },
   "license": "ISC",
