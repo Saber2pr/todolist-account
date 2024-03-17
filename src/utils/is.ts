@@ -37,3 +37,5 @@ export const isJSON = (str: string) => {
   }
 }
 export const compareId = (a: string | number, b: string | number) => a == b
+
+export const REG_isLatin1 = /^[\x00-\xFF]+$/
