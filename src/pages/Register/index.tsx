@@ -9,7 +9,6 @@ import { Bottom, Contain, FormContent, Logo } from './index.style'
 import { useDispatch } from 'react-redux'
 import { commonSlice } from '@/store/common'
 import { useAppDispatch } from '@/store/store'
-import { REG_isLatin1 } from '@/utils'
 
 export interface RegisterPageProps {}
 
@@ -64,8 +63,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
               rules={[
                 {
                   required: true,
-                  pattern: REG_isLatin1,
-                  message: 'Only English Name allowed, in Latin1',
                 },
               ]}
             >
