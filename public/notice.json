@@ -1,6 +1,10 @@
 {
   "list": [
     {
+      "title": "2026.6.22 - Todolist AI Skills",
+      "url": "https://github.com/aicupa/skills/"
+    },
+    {
       "title": "2026.6.17 - Todolist Plugin Support",
       "url": "https://docs.aicupa.com/posts/287994228/4005700258/"
     },
@@ -21,5 +25,5 @@
       "url": "https://docs.aicupa.com/"
     }
   ],
-  "key": "20260617"
+  "key": "20260622"
 }
